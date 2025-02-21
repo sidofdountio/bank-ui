@@ -1,0 +1,20 @@
+main {
+    background-color: #e7f3f6;
+    color: #333;
+    padding: 20px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 19px;
+    height: 1000vh;
+}
+
+.login {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 500px;
+}
+mat-form-field{
+    width: 400px;
+}

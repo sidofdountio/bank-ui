@@ -1,0 +1,35 @@
+<main>
+    <div class="container">
+        <div class="px-4 pt-4">
+            <div class="row mb-4 d-flex justify-content-center">
+                <div class="col-md-8 login " [formGroup]="loginForm">
+                    <h1 class="text-uppercase text-center">Login</h1>
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input type="text" matInput  formControlName="username" placeholder="Email" />
+                            <mat-error >Email is required</mat-error>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                            <input type="password" formControlName="password" matInput placeholder="Password" />
+                            <mat-error >Password is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-2">
+                        <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+                        <a mat-button class="float-end" routerLink="/register">Register</a>
+                        <a mat-button class="float-end" routerLink="/forgot-password">Forgot Password</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 company-info">
+                    <h1 class="text-uppercase text-center">sidof</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
