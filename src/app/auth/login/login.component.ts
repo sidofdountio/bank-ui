@@ -40,26 +40,43 @@ export class LoginComponent {
   }
 
   onLogin() {
-    const email = this.loginForm.get('username').value;
+    const email = this.loginForm.get('email').value;
     const password = this.loginForm.get('password').value;
     // Call login service to authenticate and store token
     this.loading.next(true);
     const request: AuthRequest = { email, password };
+    console.log(request);
+
     this.authService.login(request).subscribe(
       {
         next: (response) => {
           this.loading.next(false);
-          console.log(response);
+          // console.log(response);
           // this.getCurrentUser();
-          this.router.navigate(["/app-admin"]);
-        },            
+          this.router.navigate(["/app"]);
+        },
         error: (error) => {
+         
           this.loading.next(false);
+            if (error.error.validationError) {
+              // this.notifier.onWarning(error.error.validationError);
+            } else {
+              // this.notifier.onWarning(error.error.validationError);
+            }
+            if (error.error.errorCode === 3005) {
+              // this.notifier.onError("Username or password incorret ");
+            }
+            if (error.error.errorCode === 3003) {
+              // this.notifier.onError("Your account is disabled");
+            } 
+            if (error.error.errorCode === 3004) {
+              // this.notifier.onError("Your account is disabled");
+            }
           console.error(error)
         }
       }
     )
-    
+
   }
 
 }

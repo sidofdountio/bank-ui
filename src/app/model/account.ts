@@ -14,4 +14,5 @@ export interface Account {
     iban: string; // Required field
     branch: Branch; // Reference to the Branch interface
     customer: Customer; // Reference to the Customer interface
+    createdAt?:any;
 }

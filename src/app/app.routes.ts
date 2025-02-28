@@ -9,18 +9,41 @@ import { TransactionDetailsComponent } from './main-app/transaction/transaction-
 import { TransactionListComponent } from './main-app/transaction/transaction-list/transaction-list.component';
 import { TransactionWithdrawalComponent } from './main-app/transaction/transaction-withdrawal/transaction-withdrawal.component';
 import { TransactionMaintenanceTaxComponent } from './main-app/transaction/transaction-maintenance-tax/transaction-maintenance-tax.component';
+import { TransactionEditComponent } from './main-app/transaction/transaction-edit/transaction-edit.component';
+import { AccountAddComponent } from './main-app/account/account-add/account-add.component';
+import { AccountListComponent } from './main-app/account/account-list/account-list.component';
+import { CustomerAddComponent } from './main-app/customer/customer-add/customer-add.component';
+import { CustomerListComponent } from './main-app/customer/customer-list/customer-list.component';
+import { TransactionTranferOutComponent } from './main-app/transaction/transaction-tranfer-out/transaction-tranfer-out.component';
+import { TransactionTranferInComponent } from './main-app/transaction/transaction-tranfer-in/transaction-tranfer-in.component';
+import { TransactionToEditComponent } from './main-app/transaction/transaction-to-edit/transaction-to-edit.component';
+import { BranchAddComponent } from './main-app/branch/branch-add/branch-add.component';
+import { BranchListComponent } from './main-app/branch/branch-list/branch-list.component';
+import { TransactionDepositComponent } from './main-app/transaction/transaction-deposit/transaction-deposit.component';
 
 export const routes: Routes = [
 
     {
-        // canActivate:[authGuard],
-        path: 'app-admin',
+        canActivate:[authGuard],
+        path: 'app',
         component: MainAppComponent,
         children: [
             {
                 path: '', component: DashboardComponent,
                 title: 'home'
             },
+            // branch
+            {
+                path: 'add-branch',
+                component: BranchAddComponent,
+                title: 'save-branch'
+            },
+            {
+                path: 'branch-list',
+                component: BranchListComponent,
+                title: 'branch-list'
+            },
+            // Transactions
             {
                 path: 'details-transaction',
                 component: TransactionDetailsComponent,
@@ -33,23 +56,18 @@ export const routes: Routes = [
             },
             {
                 path: 'model-details-transaction/:id',
-                component: ModelDetailsTransactionComponent,
+                component: TransactionToEditComponent,
                 title: 'Model-details'
-            },
-            {
-                path: 'bank-statement/:id',
-                component: BanckStatementComponent, 
-                title: 'bank-stement'
             },
             
             {
                 path: 'transactions',
                 component: TransactionListComponent,
-                title: 'transaction'
+                title: 'transactions'
             },
             {
                 path: 'deposit/:id',
-                component: TransactionDetailsComponent,
+                component: TransactionDepositComponent,
                 title: 'deposit'
             },
             {
@@ -67,17 +85,27 @@ export const routes: Routes = [
                 component: TransactionMaintenanceTaxComponent,
                 title: 'maintenance'
             },
-            
             {
-                path: 'transfer/:id',
-                component: TransferTransactionComponent,
+                path:'edit-transaction/:id',
+                component: TransactionEditComponent,
+                title: 'edit-transaction'
+            },
+            {
+                path: 'transfer-out/:id',
+                component: TransactionTranferOutComponent,
+                title: 'transfer'
+            },
+            {
+                path: 'transfer-in/:id',
+                component: TransactionTranferInComponent,
                 title: 'transfer'
             },
             {
                 path: 'transactions/:id',
-                component: EditTransactionComponent,
+                component: TransactionEditComponent,
                 title: 'transaction'
             },
+            // customer
             {
                 path: 'customers',
                 component: CustomerListComponent,
@@ -88,26 +116,23 @@ export const routes: Routes = [
                 component: CustomerAddComponent,
                 title:'add-customer'
             },
+            // Account
             {
-                path:'account',
-                component: ListBankaccountComponent,
-                title: 'account'
+                path:'accounts',
+                component: AccountListComponent,
+                title: 'Account'
             },
             {
                 path:'add-account',
-                component: AddBankaccountComponent,
+                component: AccountAddComponent,
                 title: 'account'
             },
             {
                 path:'add-account/:id',
-                component: SaveBankaccountComponent,
+                component: AccountAddComponent,
                 title: 'account'
             },
-            {
-                path:'edit-transaction/:id',
-                component: EditTransactionComponent,
-                title: 'edit-transaction'
-            }
+            
         ]
     },
     {

@@ -1,0 +1,59 @@
+<main>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" [formGroup]="branchForm">
+                <h1>Add new Branch</h1>
+                <!-- Add Table Here -->
+    
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput formControlName="email"  />
+                            <mat-error> Email is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input type="text" matInput formControlName="name"  />
+                            <mat-error> Name is required</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Branch Code</mat-label>
+                            <input type="text" matInput formControlName="branchCode" />
+                            <mat-error>Branch Code is required</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Address</mat-label>
+                            <input type="text" matInput formControlName="address" />
+                            <mat-error>Branch Code is required</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <!-- <div class="mb-2">
+                        <mat-form-field>
+                            <mat-label>Select banck</mat-label>
+                            <mat-select>
+                              <mat-option value="one">First option</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div> -->
+    
+                    <div class="mb-2">
+                        <button mat-raised-button (click)="onSave()" [disabled]="branchForm.invalid">Save</button>
+                        <button mat-button (click)="onCancel()">Cancel</button>
+                    </div>
+    
+               
+    
+            </div>
+        </div>
+    </div>
+</main>

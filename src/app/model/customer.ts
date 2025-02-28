@@ -5,7 +5,7 @@ export interface Customer {
     email: string;
     phoneNumber: string;
     customerCode: string;
-    addresss: string;
+    address: string;
     // Add additional fields as needed
     hasAccount?: boolean;
     secondFirstName?:string;

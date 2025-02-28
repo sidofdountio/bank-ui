@@ -3,4 +3,6 @@ export interface BranchRequest {
     name:string;
     address:string;
     email:string;
+    bankCode:string;
+    branchCode:string;
 }

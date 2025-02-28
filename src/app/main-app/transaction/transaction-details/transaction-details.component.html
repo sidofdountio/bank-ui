@@ -1,1 +1,40 @@
-<p>transaction-details works!</p>
+<main>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <button mat-raised-button (click)="exportPdf1()">Download PDF 1</button>
+                &nbsp; &nbsp;
+                <button mat-raised-button (click)="exportPdf2()">Download PDF 2</button>
+                <!-- &nbsp; &nbsp;
+                <button mat-raised-button (click)="exportPdf3('content-to-donwload3')">Download PDF 3</button>
+                &nbsp; &nbsp;
+                <button mat-raised-button (click)="exportPdfForBankStement()">Download PDF Statement</button>
+                &nbsp; &nbsp;
+                <button mat-raised-button color="primary" (click)="exportPdfForBankAVI()">Download PDF AVI</button>
+                &nbsp; &nbsp;
+                <button mat-raised-button (click)="onSeeBankStatement()">Bank statement </button>
+                &nbsp; &nbsp;
+                <button mat-raised-button (click)="onConvertAccountBalanceToCannadaCurrency()">Change</button> -->
+    
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 button-action">
+                <button routerLink="/app/deposit/{{account.accountId}}"
+                    mat-raised-button><mat-icon>add</mat-icon>Deposit</button>
+                <button routerLink="/app/withdraw/{{account.accountId}}"
+                    mat-raised-button><mat-icon>remove</mat-icon></button>
+                <button routerLink="/app/transfer/{{account.accountId}}" mat-raised-button>transfer</button>
+                <button routerLink="/app/cheque/{{account.accountId}}" mat-raised-button>Cheque</button>
+                <button routerLink="/app/maintenance/{{account.accountId}}" mat-raised-button>Maintenance</button>
+    
+            </div>
+        </div>
+        
+        <div class="row">
+            
+    
+        </div>
+    </div>
+</main>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import {  RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-page-not-found',
@@ -15,5 +15,11 @@ import { RouterModule } from '@angular/router';
   styleUrl: './page-not-found.component.css'
 })
 export class PageNotFoundComponent {
+
+  constructor(private location:Location){}
+
+  OnGoBack(){
+    this.location.back();
+  }
 
 }

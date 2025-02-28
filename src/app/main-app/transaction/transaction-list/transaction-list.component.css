@@ -1,0 +1,25 @@
+main {
+    background: radial-gradient(circle, #e6f1f7, #ffffff);
+    /* background-color: #e7f3f6; */
+    color: #333;
+    padding: 20px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 19px;
+    height: 1000vh;
+}
+
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td,
+th {
+    width: 25%;
+}

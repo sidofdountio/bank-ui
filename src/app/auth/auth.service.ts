@@ -24,7 +24,11 @@ export class AuthService {
 
   login(request: AuthRequest): Observable<CustomResponse> {
     return this.http.post<any>(`${this.URL}/authentication`, request)
-      .pipe()
+      .pipe(
+        tap((response)=>{
+          this.doLogin(request.email, response.data.authResponse.token);
+        })
+      )
   }
 
   getCurrentAuthUser() {

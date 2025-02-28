@@ -7,7 +7,7 @@
                     <div class="mb-2">
                         <mat-form-field>
                             <mat-label>Email</mat-label>
-                            <input type="text" matInput  formControlName="username" placeholder="Email" />
+                            <input type="text" matInput  formControlName="email" placeholder="Email" />
                             <mat-error >Email is required</mat-error>
 
                         </mat-form-field>
@@ -20,14 +20,25 @@
                         </mat-form-field>
                     </div>
                     <div class="mb-2">
-                        <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+           
+
+                        @if(isLoading$ | async){
+                            <button class="btn btn-danger" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Login...
+                            </button> 
+                        }
+                        @if (!(isLoading$ | async)) {
+                            <button mat-raised-button color="primary" (click)="onLogin()">Login</button>
+                        }
+
                         <a mat-button class="float-end" routerLink="/register">Register</a>
                         <a mat-button class="float-end" routerLink="/forgot-password">Forgot Password</a>
                     </div>
                 </div>
                 
                 <div class="col-md-4 company-info">
-                    <h1 class="text-uppercase text-center">sidof</h1>
+                    <h1 class="text-uppercase text-center ">sidof Bank</h1>
                 </div>
             </div>
         </div>
