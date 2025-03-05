@@ -16,16 +16,17 @@ export class AuthService {
   private JWT_TOKEN: string = 'BANK_APP_JWT_TOKEN';
   private loggerUser: string;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  URL: string = environment.URL + '/auth';
+  readonly URL: string = environment.URL + '/auth';
 
   constructor(private http: HttpClient) { }
 
 
 
   login(request: AuthRequest): Observable<CustomResponse> {
-    return this.http.post<any>(`${this.URL}/authentication`, request)
+    return this.http.post<CustomResponse>(`${this.URL}/authentication`, request)
       .pipe(
         tap((response)=>{
+          
           this.doLogin(request.email, response.data.authResponse.token);
         })
       )
@@ -39,6 +40,7 @@ export class AuthService {
 
   private doLogin(email: string, token: string | any) {
     this.loggerUser = email;
+    
     this.storeJwtToken(token);
     this.isAuthenticatedSubject.next(true);
   }

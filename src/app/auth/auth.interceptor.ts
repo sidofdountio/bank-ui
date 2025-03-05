@@ -13,7 +13,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
   // check  if the current is register is yes should not send token to the header
-  if(req.url.includes(auth.URL)) return next(req); 
+  if(req.url.includes(auth.URL )) {
+    console.log('auth', auth.URL);
+    return next(req); 
+  }
   // if(req.url.includes('/auth/register')) return next(req); 
   
 
