@@ -26,10 +26,21 @@
         </div>
         <div class="row mb-2" [formGroup]="transactionForm">
             <div class="col-md-4">
-                <h1>Withdrawal</h1>
+                <h1>Gab</h1>
                 <div class="mb-2">
                     <input type="text" class="form-control" disabled [placeholder]="customername">
                 </div>
+                <div class="mb-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Gab Location</mat-label>
+                        <mat-select formControlName="description">
+                            @for (gab of gabs; track gabs;) {
+                            <mat-option [value]="gab.name">{{gab.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
                 <div class="mb-2">
                     <mat-form-field appearance="outline">
                         <input matInput formControlName="releasedAt" [matDatepicker]="releasedAtPicker"
@@ -53,7 +64,12 @@
                         <input type="number" matInput formControlName="balance" placeholder="balance" />
                     </mat-form-field>
                 </div>
-
+                <!-- <div class="mb-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Libele</mat-label>
+                        <input type="text" matInput formControlName="description" placeholder="balance" />
+                    </mat-form-field>
+                </div> -->
 
                 <div class="mb-2 d-flex justify-content-between">
                     <button (click)="onGoBack()" mat-raised-button color="accent">Go BACK</button>

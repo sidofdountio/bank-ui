@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mb-4">
             <div class="col-md-12">
-                <button mat-raised-button (click)="exportPdf1()">Download PDF 1</button>
+                <button mat-raised-button (click)="exportPdf1()">Download Bank Statement</button>
                 &nbsp; &nbsp;
                 <button mat-raised-button (click)="exportPdf2()">Download PDF 2</button>
                 <!-- &nbsp; &nbsp;
@@ -15,26 +15,140 @@
                 <button mat-raised-button (click)="onSeeBankStatement()">Bank statement </button>
                 &nbsp; &nbsp;
                 <button mat-raised-button (click)="onConvertAccountBalanceToCannadaCurrency()">Change</button> -->
-    
+
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12 button-action">
                 <button routerLink="/app/deposit/{{account.accountId}}"
                     mat-raised-button><mat-icon>add</mat-icon>Deposit</button>
-                <button routerLink="/app/withdraw/{{account.accountId}}"
-                    mat-raised-button><mat-icon>remove</mat-icon></button>
-                <button routerLink="/app/transfer/{{account.accountId}}" mat-raised-button>transfer</button>
+                <button routerLink="/app/withdrawal/{{account.accountId}}"
+                    mat-raised-button><mat-icon>remove</mat-icon>Withdrawal</button>
+                <button routerLink="/app/transfer-in/{{account.accountId}}" mat-raised-button>Transfer IN</button>
+                <button routerLink="/app/transfer-out/{{account.accountId}}" mat-raised-button>Transfer OUT</button>
+                <button routerLink="/app/transfer-gab/{{account.accountId}}" mat-raised-button>GAB</button>
+                <button routerLink="/app/maintenance/{{account.accountId}}" mat-raised-button>TAX/Keeping</button>
                 <button routerLink="/app/cheque/{{account.accountId}}" mat-raised-button>Cheque</button>
                 <button routerLink="/app/maintenance/{{account.accountId}}" mat-raised-button>Maintenance</button>
-    
+
             </div>
         </div>
-        
-        <div class="row">
-            
-    
+        <!-- Content -->
+        <div class="mt-4 " id="content-to-download">
+            <!-- Header Section -->
+            <div class="">
+                <div class="row align-items-start">
+                    <!-- Bank Logo and Title -->
+                    <div class="col-md-5">
+                        <div class="">
+                            <img src="afriland-logo.png" alt="Afriland First Bank" class="bank-logo mb-3">
+                        </div>
+                        <!-- News Box -->
+                        <div class="news-box">
+                            <h3 class="text-center">News !</h3>
+                            <p class="mb-0">
+                                Cher(e) client(e), suivez vos opérations bancaires 24h/24 et 7j/7 par SMS avec SMS First
+                                et en
+                                ligne avec E-First.
+                                Souscrivez AUJOURD'HUI en agences.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- QR Code -->
+                        <div class="qr-code-box">
+                            <img src="qr-code.png" alt="" class="img-fluid">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 text-end">
+                        <h2 class="statement-title">RELEVE DE COMPTE</h2>
+                        <div class="account-info">
+                            <p>Du {{transaction.createdAt}} Au {{endDate}}</p>
+                            <p>Compte N° {{account.accountNumber}}</p>
+                            <p>Devise: FRANC CFA</p>
+                            <p>Date {{currentDate | date:'dd/MM/yyyy'}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="identification-title text-center fb-bold">RELEVE D'IDENTITE BANCAIRE</h1>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 fw-bold">{{account?.branch?.bank?.name}}</p>
+                        <!-- <p class="mb-1">{{bankDetails.establishment}}</p> -->
+                        <p class="mb-1">{{account.branch.bank.headOfficeAddress}}</p>
+                        <!-- <p class="mb-1">{{bankDetails.city}}</p> -->
+                    </div>
+                </div>
+
+                <!-- Bank Identification -->
+                <div class="bank-identification">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1">IDENTIFICATION NATIONALE</p>
+                            <p class="mb-1 fw-bold">RIB: {{account.rib}}</p>
+                            <p class="mb-1">IDENTIFICATION BANCAIRE INTERNATIONALE</p>
+                            <p class="mb-1 fw-bold">IBAN: {{account.iban}}</p>
+                            <p class="mb-1 fw-bold">SWIFT CODE: {{account.branch.bank.swiftCode}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1">{{account.branch.name}}</p>
+                            <!-- <p class="mb-1">{{bankDetails.establishment}}</p> -->
+                            <p class="">{{account.branch.address}}</p>
+                            <!-- <p class="mb-1">{{bankDetails.city}}</p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- bank-statement.component.html -->
+            <div class="row mb-4">
+                <!-- Previous header content remains the same -->
+                <div class="col-md-12">
+                    <!-- Balance and Page Number -->
+                    <div class="d-flex justify-content-between mt-4 me-4">
+                        <p></p>
+                        <p class="mb-0 fw-bold">Solde de début: {{account.initialBalance | numberFormat}}</p>
+                        <p class="mb-0 me-2 page">Page 1/9</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered  rounded-table">
+                            <thead >
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Libellé opération</th>
+                                    <th>Val</th>
+                                    <th class="text-end">Débit</th>
+                                    <th class="text-end">Crédit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (transaction of transactionList1; track $index) {
+                                <tr>
+                                    <td> {{transaction.createdAt | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{transaction.description}}</td>
+                                    <td>{{transaction.processedAt | date:'dd/MM/yyyy'}}</td>
+                                    <td class="text-end">{{transaction.debit | numberFormat }}</td>
+                                    <td class="text-end">{{transaction.credit | numberFormat }}</td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination Controls -->
+
+                </div>
+
+            </div>
+
+            <div class="line">
+
+            </div>
         </div>
     </div>
 </main>

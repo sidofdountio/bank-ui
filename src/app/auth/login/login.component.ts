@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit{
         next: (response) => {
           this.loading.next(false);
           console.log(response);
+          alert("success login");
           // this.getCurrentUser();
           this.router.navigate(["/app/accounts"]);
         },

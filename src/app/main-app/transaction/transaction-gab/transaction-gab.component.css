@@ -2,6 +2,7 @@ main {
     background-color: #e7f3f6;
     color: #333;
     padding: 20px;
+    /* font-family: 'Roboto Mono', monospace; */
     font-weight: 500;
     font-size: 19px;
     height: 1000vh;
@@ -10,3 +11,4 @@ main {
 mat-form-field{
     width: 400px;
 }
+

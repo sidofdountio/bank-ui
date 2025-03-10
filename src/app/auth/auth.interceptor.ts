@@ -19,8 +19,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
   // if(req.url.includes('/auth/register')) return next(req); 
   
-
-
   return next(req);
 };
 

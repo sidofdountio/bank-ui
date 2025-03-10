@@ -10,17 +10,18 @@ import { BehaviorSubject } from 'rxjs';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
-import { TransactionRequest } from '../../../request/transaction-request';
-import { TransactionType } from '../../../model/enumeration/transaction-type';
-import { AccountType } from '../../../model/enumeration/account-type';
 import { Account } from '../../../model/account';
 import { AccountStatus } from '../../../model/enumeration/account-status';
-import { TransactionService } from '../../../service/transaction.service';
+import { AccountType } from '../../../model/enumeration/account-type';
+import { TransactionType } from '../../../model/enumeration/transaction-type';
+import { TransactionRequest } from '../../../request/transaction-request';
 import { AccountService } from '../../../service/account.service';
 import { CustomerService } from '../../../service/customer.service';
+import { TransactionService } from '../../../service/transaction.service';
+import { UserFake } from '../../../model/utils/user-fake';
 
 @Component({
-  selector: 'app-transaction-deposit',
+  selector: 'app-transfer-in',
   standalone: true,
   imports: [
     MatNativeDateModule,
@@ -35,10 +36,10 @@ import { CustomerService } from '../../../service/customer.service';
     MatIconModule
   ],
   providers: [DatePipe],
-  templateUrl: './transaction-deposit.component.html',
-  styleUrl: './transaction-deposit.component.css'
+  templateUrl: './transfer-in.component.html',
+  styleUrl: './transfer-in.component.css'
 })
-export class TransactionDepositComponent implements OnInit {
+export class TransferInComponent implements OnInit {
   transactionForm: FormGroup<any>;
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading$ = this.loading.asObservable();
@@ -54,7 +55,7 @@ export class TransactionDepositComponent implements OnInit {
     credit: 0,
     accountNumber: '',
     accountId: 0,
-    transactionType: TransactionType.DEPOSIT
+    transactionType: TransactionType.TRANSFER_INCOMING
   }
 
   account: Account = {
@@ -102,6 +103,29 @@ export class TransactionDepositComponent implements OnInit {
 
   customername: string = "";
 
+  users: UserFake[] = [
+    { name: 'John Doe' },
+    { name: 'Jane Doe' },
+    { name: 'Alice Doe' },
+    { name: 'Bob Doe' },
+    { name: 'Emily Doe' },
+    { name: 'David Doe' },
+    { name: 'Sarah Doe' },
+    { name: 'Michael Doe' },
+    { name: 'Chris Doe' },
+    { name: 'Laura Doe' },
+    { name: 'Olivia Doe' },
+    { name: 'Andrew Doe' },
+    { name: 'Ryan Doe' },
+    { name: 'Jessica Doe' },
+    { name: 'Daniel Doe' },
+    { name: 'Matthew Doe' },
+    { name: 'David Lee' },
+    { name: 'Sophia Doe' },
+    { name: 'Michael Lee' },
+    { name: 'Christopher Lee' },
+  ];
+
   constructor(
     private location: Location,
     private transactionService: TransactionService,
@@ -118,11 +142,9 @@ export class TransactionDepositComponent implements OnInit {
 
     this.transactionForm = this.fb.group({
       balance: [0, [Validators.required]],
-      releasedAt: [0,[Validators.required]]
+      releasedAt: [0, [Validators.required]],
+      userrfake: ["", [Validators.required]]
     });
-
-
-
     // Handle date change event 
   }
 
@@ -136,11 +158,11 @@ export class TransactionDepositComponent implements OnInit {
 
 
   onSave() {
-    this,this.request.accountNumber = this.account.accountNumber;
+    this, this.request.accountNumber = this.account.accountNumber;
     this.request.amount = this.transactionForm.value.balance;
     this.request.createdAt = this.createdDate;
     this.request.credit = this.transactionForm.value.balance;
-    this.request.description = "DEPOSIT " + this.account.customer.lastName + " " + this.account.customer.firstName;
+    this.request.description = "VIR. RECUS " + this.transactionForm.value.userrfake;
     this.request.accountId = this.account.accountId;
 
     console.log(this.request)
@@ -149,15 +171,15 @@ export class TransactionDepositComponent implements OnInit {
 
 
   save(request: TransactionRequest): void {
-    this.transactionService.deposit$(request).subscribe(
+    this.transactionService.transferIn$(request).subscribe(
       {
         next: (response) => {
           this.messageSuccess = response.message;
         },
         error: (error) => {
-          if (error.validationError	) {
+          if (error.validationError) {
             this.messageError = error.error.error;
-          }else{
+          } else {
           }
           if (error.error.errorCode === 49) {
             this.messageError = error.error.error;

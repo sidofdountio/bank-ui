@@ -48,6 +48,7 @@ export class TransactionService {
       .http
       .post<any>(`${this.URL}/deposit`, request).pipe(
     );
+
   // make cheque
   cheque$ = (request: TransactionRequest, httpContext?: HttpContext) => <Observable<CustomResponse>>
     this
@@ -64,17 +65,28 @@ export class TransactionService {
 
   // withdrawal
   withdraw$ = (request: TransactionRequest) => <Observable<CustomResponse>>
-    this
-      .http
-      .post<any>(`${this.URL}/withdraw`, request).pipe(
+    this.http
+      .post<any>(`${this.URL}/withdrawal`, request).pipe(
     );
 
-  // tranfer
-  transfer$ = (request: TransactionRequest) => <Observable<CustomResponse>>
-    this
-      .http
-      .post<any>(`${this.URL}/transfer`, request).pipe(
-    );
+  // tranfer IN
+  transferIn$ = (request: TransactionRequest) => <Observable<CustomResponse>>
+    this.http
+      .post<any>(`${this.URL}/transfer-in`, request).pipe();
+
+  // tranfer OUT
+  transferOut$ = (request: TransactionRequest) => <Observable<CustomResponse>>
+    this.http
+      .post<any>(`${this.URL}/transfer-out`, request).pipe();
+
+  // GAB
+  gab$ = (request: TransactionRequest) => <Observable<CustomResponse>>
+    this.http
+      .post<any>(`${this.URL}/transfer-gab`, request).pipe();
+  // GAB
+  taxAndKeeping$ = (request: TransactionRequest) => <Observable<CustomResponse>>
+    this.http
+      .post<any>(`${this.URL}/transfer-tax`, request).pipe();
 
 
 

@@ -11,5 +11,5 @@ export interface Bank {
     phoneNumber: string;
     email: string;
     website: string;
-    branches: Branch[];
+    branches?: Branch[];
 }

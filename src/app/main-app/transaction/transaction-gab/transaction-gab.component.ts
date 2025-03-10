@@ -12,15 +12,15 @@ import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/
 import { MatIconModule } from '@angular/material/icon';
 import { TransactionRequest } from '../../../request/transaction-request';
 import { TransactionType } from '../../../model/enumeration/transaction-type';
+import { AccountStatus } from '../../../model/enumeration/account-status';
 import { AccountType } from '../../../model/enumeration/account-type';
 import { Account } from '../../../model/account';
-import { AccountStatus } from '../../../model/enumeration/account-status';
-import { TransactionService } from '../../../service/transaction.service';
 import { AccountService } from '../../../service/account.service';
-import { CustomerService } from '../../../service/customer.service';
+import { TransactionService } from '../../../service/transaction.service';
+import { GabATM } from '../../../model/utils/gab';
 
 @Component({
-  selector: 'app-transaction-deposit',
+  selector: 'app-transaction-gab',
   standalone: true,
   imports: [
     MatNativeDateModule,
@@ -35,10 +35,10 @@ import { CustomerService } from '../../../service/customer.service';
     MatIconModule
   ],
   providers: [DatePipe],
-  templateUrl: './transaction-deposit.component.html',
-  styleUrl: './transaction-deposit.component.css'
+  templateUrl: './transaction-gab.component.html',
+  styleUrl: './transaction-gab.component.css'
 })
-export class TransactionDepositComponent implements OnInit {
+export class TransactionGabComponent implements OnInit {
   transactionForm: FormGroup<any>;
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading$ = this.loading.asObservable();
@@ -54,7 +54,7 @@ export class TransactionDepositComponent implements OnInit {
     credit: 0,
     accountNumber: '',
     accountId: 0,
-    transactionType: TransactionType.DEPOSIT
+    transactionType: TransactionType.ATM_WITHDRAWAL
   }
 
   account: Account = {
@@ -101,6 +101,27 @@ export class TransactionDepositComponent implements OnInit {
   datePickerFrom: FormGroup<any>;
 
   customername: string = "";
+  atm: string[] = ["", "", "", "", "", "", "", "",]
+  gabs: GabATM[] = [
+    { name: "GAB N1 RETRAITE" },
+    { name: "GAB N1 MFOUDI" },
+    { name: "GAB N2 MFOUDI" },
+    { name: "GAB N2 MILLENIUM" },
+    { name: "GAB N1 MEDONG" },
+    { name: "GAB N2 MEDONG" },
+    { name: "GAB N1 MARCHER CENTRE" },
+    { name: "GAB N2 MARCHER CENTRE" },
+    { name: "GAB N1 BYEM-ASSI" },
+    { name: "GAB N2 BYEM-ASSI" },
+    { name: "GAB N3 MESSA" },
+    { name: "GAB N1 MESSA" },
+    { name: "GAB N2 MESSA" },
+    { name: "GAB N2 BYEM-ASSI CAR" },
+    { name: "GAB N1 CAMAIR" },
+    { name: "GAB POSTE CENTRAL" },
+
+
+  ]; //
 
   constructor(
     private location: Location,
@@ -118,7 +139,8 @@ export class TransactionDepositComponent implements OnInit {
 
     this.transactionForm = this.fb.group({
       balance: [0, [Validators.required]],
-      releasedAt: [0,[Validators.required]]
+      releasedAt: [0, [Validators.required]],
+      description: ['', [Validators.required]]
     });
 
 
@@ -136,11 +158,11 @@ export class TransactionDepositComponent implements OnInit {
 
 
   onSave() {
-    this,this.request.accountNumber = this.account.accountNumber;
+    this, this.request.accountNumber = this.account.accountNumber;
     this.request.amount = this.transactionForm.value.balance;
     this.request.createdAt = this.createdDate;
-    this.request.credit = this.transactionForm.value.balance;
-    this.request.description = "DEPOSIT " + this.account.customer.lastName + " " + this.account.customer.firstName;
+    this.request.debit = this.transactionForm.value.balance;
+    this.request.description = this.transactionForm.value.description;
     this.request.accountId = this.account.accountId;
 
     console.log(this.request)
@@ -149,15 +171,15 @@ export class TransactionDepositComponent implements OnInit {
 
 
   save(request: TransactionRequest): void {
-    this.transactionService.deposit$(request).subscribe(
+    this.transactionService.gab$(request).subscribe(
       {
         next: (response) => {
           this.messageSuccess = response.message;
         },
         error: (error) => {
-          if (error.validationError	) {
+          if (error.validationError) {
             this.messageError = error.error.error;
-          }else{
+          } else {
           }
           if (error.error.errorCode === 49) {
             this.messageError = error.error.error;
@@ -194,6 +216,3 @@ export class TransactionDepositComponent implements OnInit {
   }
 
 }
-
-
-

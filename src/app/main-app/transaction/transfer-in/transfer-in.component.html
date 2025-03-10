@@ -14,7 +14,7 @@
                 }
                 @if (messageError !== '' ) {
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:" height="24" width="24">
+                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:" height="24">
                         <use xlink:href="#exclamation-triangle-fill" />
                     </svg>
                     <div>
@@ -26,35 +26,51 @@
         </div>
         <div class="row mb-2" [formGroup]="transactionForm">
             <div class="col-md-4">
-                <h1>Withdrawal</h1>
+                <h2>Transfer IN</h2>
+              
                 <div class="mb-2">
-                    <input type="text" class="form-control" disabled [placeholder]="customername">
+                    <input type="text" class="form-control" disabled  [placeholder]="customername" >
+                </div>
+
+                <div class="mb-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>User</mat-label>
+                        <mat-select formControlName="userrfake">
+                            @for (user of users; track users) {
+                              <mat-option [value]="user.name"  >{{user.name}}</mat-option>
+                            }
+                          </mat-select>
+                    </mat-form-field>
                 </div>
                 <div class="mb-2">
                     <mat-form-field appearance="outline">
-                        <input matInput formControlName="releasedAt" [matDatepicker]="releasedAtPicker"
-                            (dateChange)="onDateChange($event)" [(ngModel)]="createdDate"
-                            (click)="releasedAtPicker.open()">
-
+                        <input matInput formControlName="releasedAt" [matDatepicker]="releasedAtPicker" (dateChange)="onDateChange($event)"
+                            [(ngModel)]="createdDate" (click)="releasedAtPicker.open()" >
+    
                         <mat-datepicker-toggle matSuffix [for]="releasedAtPicker">
                             <mat-icon matDatepickerToggleIcon>
                                 calendar_month
                             </mat-icon>
                         </mat-datepicker-toggle>
-
+    
                         <mat-datepicker #releasedAtPicker>
                         </mat-datepicker>
                     </mat-form-field>
                 </div>
-
+    
                 <div class="mb-2">
                     <mat-form-field appearance="outline">
                         <mat-label>Balance</mat-label>
                         <input type="number" matInput formControlName="balance" placeholder="balance" />
                     </mat-form-field>
                 </div>
-
-
+                <!-- <div class="mb-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Libele</mat-label>
+                        <input type="text" matInput formControlName="description" placeholder="balance" />
+                    </mat-form-field>
+                </div> -->
+    
                 <div class="mb-2 d-flex justify-content-between">
                     <button (click)="onGoBack()" mat-raised-button color="accent">Go BACK</button>
                     &nbsp; &nbsp; &nbsp; &nbsp;
@@ -62,7 +78,7 @@
                     <button mat-raised-button [disabled]="!transactionForm.valid" mat-flat-button color="primary"
                         (click)="onSave()">Save</button>
                     }
-
+    
                     @if (isLoading$ | async) {
                     <button class="btn btn-danger customer-button" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -73,8 +89,8 @@
             </div>
         </div>
     </div>
-
-
+    
+    
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="check-circle-fill" viewBox="0 0 16 16">
             <path

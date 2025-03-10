@@ -14,6 +14,11 @@ import { AccountType } from '../../../model/enumeration/account-type';
 import { PdfService } from '../../../service/pdf.service';
 import { TransactionService } from '../../../service/transaction.service';
 import { AccountService } from '../../../service/account.service';
+import { Transaction } from '../../../model/transaction';
+import { DataState } from '../../../model/enumeration/data-state';
+import { TransactionStatus } from '../../../model/enumeration/transaction-status';
+import { TransactionType } from '../../../model/enumeration/transaction-type';
+import { NumberFormatPipe } from '../../../number.pipe';
 
 @Component({
   selector: 'app-transaction-details',
@@ -28,7 +33,8 @@ import { AccountService } from '../../../service/account.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    NumberFormatPipe
   ],
   templateUrl: './transaction-details.component.html',
   styleUrl: './transaction-details.component.css'
@@ -50,12 +56,53 @@ export class TransactionDetailsComponent implements OnInit {
       address: 'ABC Street',
       email: '12345',
       id: 1,
-      bank: undefined,
+      bank: {
+        id: 0,
+        name: '',
+        logoUrl: '',
+        banckCosde: '',
+        ribKey: '',
+        swiftCode: '',
+        headOfficeAddress: '',
+        phoneNumber: '',
+        email: '',
+        website: ''
+      },
     },
-    customer: undefined
+    customer: {
+      customerId: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      customerCode: '',
+      address: '',
+      dateOfBirth: ''
+    }
   };
+
+
   accountId: number = 0;
+  transaction: Transaction = {
+    transactionId: 0,
+    transactionReference: '',
+    createdAt: undefined,
+    status: TransactionStatus.PENDING,
+    amount: 0,
+    balanceAfterTransaction: 0,
+    type: TransactionType.DEPOSIT,
+    account: undefined
+  };
+
+  transactionList1: Transaction[] = [];
+  transactionList2: Transaction[] = [];
+  transactionList3: Transaction[] = [];
+  appState: DataState = DataState.LOADING_STATE;
+  readonly DataState = DataState;
+  
   customername: string = '';
+  endDate: any = '06/03/205';
+  currentDate: any;
 
   constructor(
     private pdfService: PdfService,
@@ -63,7 +110,9 @@ export class TransactionDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private accountService: AccountService,
     private router: Router
-  ) { }
+  ) { 
+    this.currentDate = new Date();
+  }
 
 
   ngOnInit(): void {
@@ -72,6 +121,8 @@ export class TransactionDetailsComponent implements OnInit {
     });
 
     this.getAccount(this.accountId);
+    this.getTrasanctions();
+    this.getTrasanction(this.accountId);
   }
 
   private getAccount(customerId: number) {
@@ -91,6 +142,34 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
 
+  private getTrasanctions(): void {
+    this.appState = DataState.LOADING_STATE;
+    this.transactionService.transactions$().subscribe({
+      next: (response => {
+        // this.notifier.onDefault(response.message);
+        this.transactionList1 = response.data.transactions;
+        
+        this.appState = DataState.LOADED_STATE;
+      }),
+      error: (error) => {
+        console.error(error);
+        // this.notifier.onError("Oups! something whent wrong !");
+        this.appState = DataState.ERROR_STATE;
+      }
+    });
+  }
+
+
+  private getTrasanction(accountId:number): void {
+    for (let i = 0; i < this.transactionList1.length; i++){
+      if (this.transactionList1[i].account.accountId === this.accountId) {
+        this.transaction = this.transactionList1[i];
+        break;
+      }
+    }
+  }
+
+
 
 
 
@@ -101,7 +180,7 @@ export class TransactionDetailsComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   exportPdf1() {
-    throw new Error('Method not implemented.');
+    this.pdfService.generatePdf("content-to-download", this.account.customer.lastName + " " + this.account.accountNumber);
   }
 
 }

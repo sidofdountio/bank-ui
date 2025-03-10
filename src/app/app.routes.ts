@@ -15,11 +15,12 @@ import { AccountListComponent } from './main-app/account/account-list/account-li
 import { CustomerAddComponent } from './main-app/customer/customer-add/customer-add.component';
 import { CustomerListComponent } from './main-app/customer/customer-list/customer-list.component';
 import { TransactionTranferOutComponent } from './main-app/transaction/transaction-tranfer-out/transaction-tranfer-out.component';
-import { TransactionTranferInComponent } from './main-app/transaction/transaction-tranfer-in/transaction-tranfer-in.component';
 import { TransactionToEditComponent } from './main-app/transaction/transaction-to-edit/transaction-to-edit.component';
 import { BranchAddComponent } from './main-app/branch/branch-add/branch-add.component';
 import { BranchListComponent } from './main-app/branch/branch-list/branch-list.component';
 import { TransactionDepositComponent } from './main-app/transaction/transaction-deposit/transaction-deposit.component';
+import { TransferInComponent } from './main-app/transaction/transfer-in/transfer-in.component';
+import { TransactionGabComponent } from './main-app/transaction/transaction-gab/transaction-gab.component';
 
 export const routes: Routes = [
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
         component: MainAppComponent,
         children: [
             {
+                canActivate:[authGuard],
                 path: '', component: DashboardComponent,
                 title: 'home'
             },
@@ -39,12 +41,14 @@ export const routes: Routes = [
                 title: 'save-branch'
             },
             {
+                canActivate:[authGuard],
                 path: 'branch-list',
                 component: BranchListComponent,
                 title: 'branch-list'
             },
             // Transactions
             {
+                canActivate:[authGuard],
                 path: 'details-transaction',
                 component: TransactionDetailsComponent,
                 title: 'details'
@@ -61,6 +65,7 @@ export const routes: Routes = [
             },
             
             {
+                canActivate:[authGuard],
                 path: 'transactions',
                 component: TransactionListComponent,
                 title: 'transactions'
@@ -80,6 +85,8 @@ export const routes: Routes = [
             //     component: Tra,
             //     title: 'cheque'
             // },
+            
+            // TAX
             {
                 path: 'maintenance/:id',
                 component: TransactionMaintenanceTaxComponent,
@@ -97,7 +104,7 @@ export const routes: Routes = [
             },
             {
                 path: 'transfer-in/:id',
-                component: TransactionTranferInComponent,
+                component: TransferInComponent,
                 title: 'transfer'
             },
             {
@@ -105,8 +112,15 @@ export const routes: Routes = [
                 component: TransactionEditComponent,
                 title: 'transaction'
             },
+            // Gab
+            {
+                path: 'transfer-gab/:id',
+                component: TransactionGabComponent,
+                title: 'Gab transaction'
+            },
             // customer
             {
+                canActivate:[authGuard],
                 path: 'customers',
                 component: CustomerListComponent,
                 title:'customers'
